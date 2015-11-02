@@ -1,14 +1,13 @@
 import java.util.HashMap;
 
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.
+ * This class is part of the "Escape with Dignity" application. 
  * 
  * This class holds an enumeration of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.09
+ * @authors Jennifer Puhalka and Andrew Worthington
+ * @version 2015.11.02
  */
 
 public class CommandWords
@@ -26,6 +25,7 @@ public class CommandWords
         validCommands.put("go", CommandWord.GO);
         validCommands.put("help", CommandWord.HELP);
         validCommands.put("quit", CommandWord.QUIT);
+        validCommands.put("look", CommandWord.LOOK);
     }
 
     /**

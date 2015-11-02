@@ -1,8 +1,8 @@
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  This class is the main class of the "Escape with Dignity" application. 
+ *  "Escape with Dignity" is a text based adventure game where you play as a scoundrel who has
+ *  woken up naked and hung over in a dirty horse stall in the stables of a castle.  You must get your clothes
+ *  and the key to the main gate of the castle so you can escape!
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -11,14 +11,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.09
+ * @author  Jennifer Puhalka and Andrew Worthington
+ * @version 2015.11.02
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
+    //private Player thePlayer;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        //thePlayer = new Player();
     }
 
     /**
@@ -47,8 +49,10 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
+        outside.addItem("There's a horse trough a few feet away", Item.BATH);
 
         theater.setExit("west", outside);
+        theater.addChallenge("There's a guard sleeping next to the door to the bedroom", Challenge.GUARD);
 
         pub.setExit("east", outside);
 
@@ -56,6 +60,7 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+        office.addItem("There is a key on a desk by the wall", Item.KEY);
 
         currentRoom = outside;  // start game outside
     }
@@ -118,12 +123,26 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+            case LOOK:
+                examineRoom();
+                break;
         }
         return wantToQuit;
     }
 
     // implementations of user commands:
 
+    /**
+     * Print out information about any items or challenges in the room
+     */
+    private void examineRoom()
+    {
+        String roomStatus;
+        roomStatus = currentRoom.getRoomExamination();
+        System.out.println(roomStatus);
+        
+    }
+    
     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
@@ -164,6 +183,7 @@ public class Game
         }
     }
 
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
