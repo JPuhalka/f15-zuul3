@@ -2,8 +2,8 @@
 comment0.params=
 comment0.target=Items()
 comment0.text=\r\n\ Constructor\ -\ establish\ the\ hashmap\ of\ items\r\n
-comment1.params=itemString
-comment1.target=Item\ getItem(java.lang.String)
+comment1.params=itemTypeString
+comment1.target=ItemType\ getItemType(java.lang.String)
 comment1.text=\r\n\ Find\ the\ Item\ associated\ with\ an\ item\ string.\r\n\ @param\ item\ The\ word\ to\ look\ up\ (as\ a\ string).\r\n\ @return\ The\ Item\ correspondng\ to\ item,\ or\ UNKNOWN\r\n\ \ \ \ \ \ \ \ \ if\ it\ is\ not\ a\ valid\ command\ word.\r\n
 comment2.params=aString
 comment2.target=boolean\ isItem(java.lang.String)

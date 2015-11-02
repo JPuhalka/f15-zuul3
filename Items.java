@@ -12,20 +12,20 @@ import java.util.HashMap;
 public class Items
 {
     // instance variables - replace the example below with your own
-    private HashMap<String, Item>validItems;
+    private HashMap<String, ItemType>validItems;
 
     /**
      * Constructor - establish the hashmap of items
      */
     public Items()
     {
-        validItems = new HashMap<String, Item>();
-        validItems.put("bath", Item.BATH);
-        validItems.put("perfume", Item.PERFUME);
-        validItems.put("cologne", Item.COLOGNE);
-        validItems.put("key", Item.KEY);
-        validItems.put("suit", Item.SUIT);
-        validItems.put("food", Item.FOOD);
+        validItems = new HashMap<String, ItemType>();
+        validItems.put("bath", ItemType.BATH);
+        validItems.put("perfume", ItemType.PERFUME);
+        validItems.put("cologne", ItemType.COLOGNE);
+        validItems.put("key", ItemType.KEY);
+        validItems.put("suit", ItemType.SUIT);
+        validItems.put("food", ItemType.FOOD);
     }
 
     /**
@@ -34,14 +34,14 @@ public class Items
      * @return The Item correspondng to item, or UNKNOWN
      *         if it is not a valid command word.
      */
-    public Item getItem(String itemString)
+    public ItemType getItemType(String itemTypeString)
     {
-        Item item = validItems.get(itemString);
-        if(item != null) {
-            return item;
+        ItemType itemType = validItems.get(itemTypeString);
+        if(itemType != null) {
+            return itemType;
         }
         else {
-            return Item.UNKNOWN;
+            return ItemType.UNKNOWN;
         }
     }
     

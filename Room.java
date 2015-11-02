@@ -1,6 +1,7 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -19,9 +20,10 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-    private HashMap<String, Item> items;         // any items contained in the room, with an assigned description
-    private HashMap<String, Challenge> challenges; // any challenges in the room preventing progression in the game    
+    private ArrayList<Item> items;         // any items contained in the room, with an assigned description
+    private ArrayList<Challenge> challenges;  // any challenges contained in the room with an associated description   
 
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -32,25 +34,28 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        this.items = new HashMap<String, Item>();
-        this.challenges = new HashMap<String, Challenge>();
+        this.items = new ArrayList<Item>();
+        this.challenges = new ArrayList<Challenge>();
         exits = new HashMap<String, Room>();
     }
     
     /**
      * Define an item or feature in this room that can be interacted with
-     * @param item - an item that can be taken or interacted with in the room
+     * @param itemDescription - a string depicting the item or feature in the area that can be interacted with
+     * @param item - the enum of the item or feature in the room used by the game
      */
-    public void addItem(String itemDescription, Item item){
-        this.items.put(itemDescription, item);
+    public void addItem(String itemDescription, ItemType item){
+        this.items.add(new Item(itemDescription, item));
     }
     
     /**
      * Define an item or feature in this room that can be interacted with
-     * @param item - an item that can be taken or interacted with in the room
+     * @param challengeDescription - a string depicting an obstacle in the room, hindering use of an exit
+     * @param challenge - the enum of the challenge in the room
+     * @param blockedExit - the String corresponding to an exit in the room being impeeded by the challenge.
      */
-    public void addChallenge(String challengeDescription, Challenge challenge){
-        this.challenges.put(challengeDescription, challenge);
+    public void addChallenge(String challengeDescription, ChallengeType challenge, String blockedExit){
+        this.challenges.add(new Challenge(challengeDescription, challenge, blockedExit));
     }
     
     /**
@@ -124,15 +129,13 @@ public class Room
     {
         String returnString = "";
         if(challenges.size()>0){
-            Set<String> descriptions = challenges.keySet();
-            for(String desc : descriptions) {
-                returnString += desc + ".\n";
+            for(Challenge challenge : challenges) {
+                returnString += challenge.getDescription() + ".\n";
             }
         }
         if(items.size()>0){
-            Set<String> descriptions = items.keySet();
-            for(String desc : descriptions) {
-                returnString += desc + ".\n";
+            for(Item item : items) {
+                returnString += item.getDescription() + ".\n";
             } 
         }if(challenges.size() == 0 && items.size() == 0){
             returnString = "There is nothing remarkable here";
@@ -140,7 +143,35 @@ public class Room
         
         return returnString;
     }
-
+    
+    /**
+     * Test to see if player can move out of this room unimpeeded
+     */
+    public boolean canExit(String exitToTest){
+        boolean wayIsClear = true;
+        if(challenges.size()>0){
+            for(Challenge challenge : challenges){
+                if(challenge.getBlockedExit().equals(exitToTest))
+                    wayIsClear = false;
+            }
+        }
+        return wayIsClear;
+    }
+    
+    /**
+     * returns the description of challenges in the room
+     */
+    public String getChallengeText(){
+        String returnString = "";
+        if(challenges.size()>0){
+            for(Challenge challenge : challenges){
+               returnString += challenge.getDescription() + ".\n";
+            }
+        }else{
+            returnString = "There is no challenge in this room!";
+        }
+        return returnString;
+    }
     /**
      * Return the room that is reached if we go from this room in direction
      * "direction". If there is no room in that direction, return null.

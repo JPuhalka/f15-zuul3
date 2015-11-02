@@ -49,10 +49,11 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
-        outside.addItem("There's a horse trough a few feet away", Item.BATH);
+        outside.addItem("There's a horse trough a few feet away", ItemType.BATH);
 
         theater.setExit("west", outside);
-        theater.addChallenge("There's a guard sleeping next to the door to the bedroom", Challenge.GUARD);
+        theater.setExit("east", lab);
+        theater.addChallenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, "east");
 
         pub.setExit("east", outside);
 
@@ -60,7 +61,7 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
-        office.addItem("There is a key on a desk by the wall", Item.KEY);
+        office.addItem("There is a key on a desk by the wall", ItemType.KEY);
 
         currentRoom = outside;  // start game outside
     }
@@ -178,8 +179,13 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            if(currentRoom.canExit(direction)==false){
+                System.out.println("Your path is blocked! " + currentRoom.getChallengeText());
+            }
+            else{
+                currentRoom = nextRoom;
+                System.out.println(currentRoom.getLongDescription());
+            }
         }
     }
 
