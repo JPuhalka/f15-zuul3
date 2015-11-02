@@ -44,8 +44,8 @@ public class Room
      * @param itemDescription - a string depicting the item or feature in the area that can be interacted with
      * @param item - the enum of the item or feature in the room used by the game
      */
-    public void addItem(String itemDescription, ItemType item){
-        this.items.add(new Item(itemDescription, item));
+    public void addItem(String roomDescription, ItemType item, String itemDescription){
+        this.items.add(new Item(roomDescription, item, itemDescription));
     }
     
     /**
@@ -135,13 +135,41 @@ public class Room
         }
         if(items.size()>0){
             for(Item item : items) {
-                returnString += item.getDescription() + ".\n";
+                returnString += item.getRoomDescription() + ".\n";
             } 
         }if(challenges.size() == 0 && items.size() == 0){
-            returnString = "There is nothing remarkable here";
+            returnString = "There is nothing remarkable here\n";
         }
         
         return returnString;
+    }
+    
+    /**
+     * a method to test to see if a room has an item of a certain type, if so returns that item, otherwise returns null
+     */
+    private Item hasItem(ItemType itemType){
+        if(items.size()>0){
+            for(Item item : items){
+                if(item.getItemType() == itemType)
+                    return item;
+            }
+        }
+        return null;
+    }
+    
+    /** 
+     * a method to remove an item from a room after it has been taken by a player
+     * returns the item in question
+     */
+    public Item takeItem(ItemType itemIWant){
+        if(items.size()>0 && this.hasItem(itemIWant)!= null){
+            Item itemToRemove = this.hasItem(itemIWant);
+            items.remove(itemToRemove);
+            return itemToRemove;
+        }else{
+            System.out.println("That item is not in this room\n");
+            return null;
+        }
     }
     
     /**

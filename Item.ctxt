@@ -1,11 +1,14 @@
 #BlueJ class context
-comment0.params=description\ itemType
-comment0.target=Item(java.lang.String,\ ItemType)
+comment0.params=roomDescription\ itemType\ itemDescription
+comment0.target=Item(java.lang.String,\ ItemType,\ java.lang.String)
 comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Item\r\n\ @param\ description,\ the\ description\ of\ the\ item\r\n
 comment1.params=
-comment1.target=java.lang.String\ getDescription()
-comment1.text=\r\n\ a\ method\ to\ return\ the\ description\ of\ the\ item\r\n
+comment1.target=java.lang.String\ getRoomDescription()
+comment1.text=\r\n\ a\ method\ to\ return\ the\ description\ of\ the\ item\ in\ the\ scene\r\n
 comment2.params=
-comment2.target=ItemType\ getItemType()
-comment2.text=\r\n\ a\ method\ to\ return\ the\ type\ of\ the\ item\r\n
-numComments=3
+comment2.target=java.lang.String\ getItemDescription()
+comment2.text=\r\n\ a\ method\ to\ return\ the\ description\ of\ the\ item\ in\ the\ player's\ inventory\r\n
+comment3.params=
+comment3.target=ItemType\ getItemType()
+comment3.text=\r\n\ a\ method\ to\ return\ the\ type\ of\ the\ item\r\n
+numComments=4

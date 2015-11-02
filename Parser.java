@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class Parser 
 {
     private CommandWords commands;  // holds all valid command words
+    private Items items;            // holds all valid items
     private Scanner reader;         // source of command input
 
     /**

@@ -19,7 +19,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    //private Player thePlayer;
+    private Player thePlayer;
+    private Items items; // all of the items in the game
 
     /**
      * Create the game and initialise its internal map.
@@ -28,7 +29,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        //thePlayer = new Player();
+        thePlayer = new Player();
+        items = new Items();
     }
 
     /**
@@ -49,7 +51,7 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
-        outside.addItem("There's a horse trough a few feet away", ItemType.BATH);
+        outside.addItem("There's a horse trough a few feet away", ItemType.BATH, "A bucket of clean water");
 
         theater.setExit("west", outside);
         theater.setExit("east", lab);
@@ -61,7 +63,7 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
-        office.addItem("There is a key on a desk by the wall", ItemType.KEY);
+        office.addItem("There is a key on a desk by the wall", ItemType.KEY, "A bronze key with three teeth");
 
         currentRoom = outside;  // start game outside
     }
@@ -127,12 +129,43 @@ public class Game
             case LOOK:
                 examineRoom();
                 break;
+                
+            case TAKE:
+                takeItem(command);
+                break;
+                
         }
         return wantToQuit;
     }
 
     // implementations of user commands:
 
+    /**
+     * Retrieves an item in the room and adds it to player inventory.
+     */
+    private void takeItem(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Take what?");
+            return;
+        }
+        
+        String itemString = command.getSecondWord();
+        ItemType itemType = items.getItemType(itemString);
+        if(itemType == ItemType.UNKNOWN){
+            //This isn't a valid item
+            System.out.println(itemString + " isn't something in the room");
+            return;
+        }
+        
+        Item newItem = currentRoom.takeItem(itemType);
+        thePlayer.addItem(newItem);
+        System.out.println("You took " + newItem.getItemDescription() + " and added it to your inventory.\n");
+        
+        
+    }
+    
     /**
      * Print out information about any items or challenges in the room
      */

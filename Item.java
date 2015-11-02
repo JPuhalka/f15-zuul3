@@ -12,25 +12,37 @@
 public class Item
 {
     private ItemType itemType; // the type of the item
-    private String description;  // information about the object in a room
+    private String roomDescription;  // information about the object in a room
+    private String itemDescription;  // information about the item relevant to the player
 
     /**
      * Constructor for objects of class Item
      * @param description, the description of the item
      */
-    public Item(String description, ItemType itemType)
+    public Item(String roomDescription, ItemType itemType, String itemDescription)
     {
-        this.description = description;
+        this.roomDescription = roomDescription;
+        this.itemDescription = itemDescription;
         this.itemType = itemType;
     }
 
     /**
-     * a method to return the description of the item
+     * a method to return the description of the item in the scene
      */
-    public String getDescription()
+    public String getRoomDescription()
     {
-        return this.description;
+        return this.roomDescription;
     }
+
+    
+    /**
+     * a method to return the description of the item in the player's inventory
+     */
+    public String getItemDescription()
+    {
+        return this.itemDescription;
+    }
+    
     
     /**
      * a method to return the type of the item
