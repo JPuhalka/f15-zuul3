@@ -1,12 +1,15 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+ 
 
 /**
- * Enumeration class Challenge - used to define the challenges that block the player's progress through
- * the game world
- * 
- * @author Jennifer Puhalka and Andrew Worthington
- * @version 2015.11.02
+ *
+ * @author jennifermoran
  */
-public enum ChallengeType
-{
-    GATE, MAIDEN, GUARD, APOTHECARY, UNKOWN
+public enum ChallengeType {
+
+	GATE, MAIDEN, GUARD, APOTHECARY, UNKOWN
 }

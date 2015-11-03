@@ -1,2 +1,12 @@
 #BlueJ class context
-numComments=0
+comment0.params=id
+comment0.target=ItemType(java.lang.String)
+comment1.params=
+comment1.target=java.lang.String\ getId()
+comment2.params=id
+comment2.target=javaapplication5.ItemType\ getItemType(java.lang.String)
+comment3.params=id
+comment3.target=boolean\ isValidItem(java.lang.String)
+comment4.params=
+comment4.target=void\ showAllItems()
+numComments=5

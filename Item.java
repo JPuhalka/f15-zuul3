@@ -1,54 +1,54 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+ 
 
 /**
- * Class Item - an Item in an Adventure game.
  *
- * This class is part of the "Escape with Dignity" application. 
- * 
- * An "Item" represents one object a player needs to hold or interact with to overcome obstacles
- * 
- * @authors Jennifer Puhalka and Andrew Worthington
- * @version 2015.11.02
+ * @author jennifermoran
  */
-public class Item
-{
-    private ItemType itemType; // the type of the item
-    private String roomDescription;  // information about the object in a room
-    private String itemDescription;  // information about the item relevant to the player
+public class Item {
 
-    /**
-     * Constructor for objects of class Item
-     * @param description, the description of the item
-     */
-    public Item(String roomDescription, ItemType itemType, String itemDescription)
-    {
-        this.roomDescription = roomDescription;
-        this.itemDescription = itemDescription;
-        this.itemType = itemType;
-    }
+	private ItemType type;
+	private String description;
+	private double weight;
 
-    /**
-     * a method to return the description of the item in the scene
-     */
-    public String getRoomDescription()
-    {
-        return this.roomDescription;
-    }
+	/**
+	 *
+	 * @param type
+	 * @param description
+	 * @param weight
+	 */
+	public Item(ItemType type, String description, double weight) {
+		this.type = type;
+		this.description = description;
+		this.weight = weight;
+	}
 
-    
-    /**
-     * a method to return the description of the item in the player's inventory
-     */
-    public String getItemDescription()
-    {
-        return this.itemDescription;
-    }
-    
-    
-    /**
-     * a method to return the type of the item
-     */
-    public ItemType getItemType()
-    {
-        return this.itemType;
-    }
+	public ItemType getType() {
+		return type;
+	}
+
+	public void setType(ItemType type) {
+		this.type = type;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
 }
