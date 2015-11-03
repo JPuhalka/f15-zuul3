@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Player()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Player\r\n\ takes\ no\ parameters,\ but\ sets\ up\ initial\ condition\ of\ player\r\n
+comment1.params=
+comment1.target=int\ getHunger()
+comment1.text=\r\n\ a\ method\ to\ retrieve\ the\ level\ of\ hunger\ of\ the\ player\r\n
+comment2.params=clothing
+comment2.target=void\ changeClothes(java.lang.String)
+comment2.text=\r\n\ a\ method\ to\ change\ the\ clothing\ status\ of\ the\ player\r\n
+comment3.params=item
+comment3.target=void\ addItem(Item)
+comment3.text=\r\n\ a\ method\ to\ add\ an\ item\ to\ the\ player's\ inventory\r\n
+comment4.params=scent
+comment4.target=void\ changeScent(java.lang.String)
+comment4.text=\r\n\ a\ method\ to\ change\ the\ scent\ status\ of\ the\ player\r\n
+numComments=5

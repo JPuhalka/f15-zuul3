@@ -1,9 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- * 
+ * This class is part of the "Escape with Dignity" application. 
  * This parser reads user input and tries to interpret it as an "Adventure"
  * command. Every time it is called it reads a line from the terminal and
  * tries to interpret the line as a two-word command. It returns the command
@@ -14,11 +12,13 @@ import java.util.Scanner;
  * returns a command object that is marked as an unknown command.
  * 
  * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.09
+ *          Updated by Jennifer Puhalka and Andrew Worthington
+ * @version 2015.11.02
  */
 public class Parser 
 {
     private CommandWords commands;  // holds all valid command words
+    private Items items;            // holds all valid items
     private Scanner reader;         // source of command input
 
     /**
