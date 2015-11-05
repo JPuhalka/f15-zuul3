@@ -129,13 +129,18 @@ public class Room {
 	private String getLookString() {
 		String returnString = "";
 		if (challenges.size() > 0) {
+		    returnString += "Blocking your way, there is: \n";
 			for (Challenge challenge : challenges) {
-				returnString += challenge.getDescription() + ".\n";
+				returnString += challenge.getDescription() + " keeping you from going " + challenge.getBlockedExit() + "\n";
+				
 			}
 		}
 		if (items.size() > 0) {
+		    if(items.size() > 1){returnString += "These ";}
+		    else{returnString += "This ";}
+		    returnString += "could be useful: \n";
 			for (Item item : items) {
-				returnString += item.getDescription() + ".\n";
+				returnString += item.getDescription() + " \n";
 			}
 		}
 		if (challenges.size() == 0 && items.size() == 0) {
@@ -149,7 +154,7 @@ public class Room {
 	 * a method to test to see if a room has an item of a certain type, if so
 	 * returns that item, otherwise returns null
 	 */
-	private Item hasItem(ItemType itemType) {
+	public Item hasItem(ItemType itemType) {
 		if (items.size() > 0) {
 			for (Item item : items) {
 				if (item.getType() == itemType) {
@@ -178,6 +183,7 @@ public class Room {
 		}
 	}
 
+	
 	/**
 	 * Test to see if player can move out of this room unimpeeded
 	 *

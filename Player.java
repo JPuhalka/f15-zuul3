@@ -13,103 +13,158 @@ import java.util.ArrayList;
  */
 public class Player {
 
-	private ArrayList<String> moveHistory;
-	private ArrayList<Item> inventory;
-	private String scent;
-	private String clothing;
-	private int hunger; // represents the level of hunger of the player
-	private Room currentRoom;
+    private ArrayList<String> moveHistory;
+    private ArrayList<Item> inventory;
+    private String scent;
+    private String clothing;
+    private int hunger; // represents the level of hunger of the player
+    private Room currentRoom;
+    private double carryWeight; // the weight of the current inventory
+    private double weightLimit = 80; // the max weight the player can carry
 
-	/**
-	 * Constructor for objects of class Player takes no parameters, but sets up
-	 * initial condition of player
-	 */
-	public Player() {
-		this.inventory = new ArrayList<>(); // starts out carrying nothing;
-		this.moveHistory = new ArrayList<>(); // starts out with no moves
-		this.scent = "foul"; // the player starts out in a stable ... he smells like shit
-		this.clothing = "naked"; // the player starts out naked, sucks for him
-		this.hunger = 0; // the player doesn't start out hungry.
-	}
+    /**
+     * Constructor for objects of class Player takes no parameters, but sets up
+     * initial condition of player
+     */
+    public Player() {
+        this.inventory = new ArrayList<>(); // starts out carrying nothing;
+        this.moveHistory = new ArrayList<>(); // starts out with no moves
+        this.scent = "foul"; // the player starts out in a stable ... he smells like shit
+        this.clothing = "naked"; // the player starts out naked, sucks for him
+        this.hunger = 0; // the player doesn't start out hungry.
+        this.carryWeight = 0;
+    }
 
-	public ArrayList<String> getMoveHistory() {
-		return moveHistory;
-	}
+    public ArrayList<String> getMoveHistory() {
+        return moveHistory;
+    }
 
-	public void setMoveHistory(ArrayList<String> moveHistory) {
-		this.moveHistory = moveHistory;
-	}
+    public void setMoveHistory(ArrayList<String> moveHistory) {
+        this.moveHistory = moveHistory;
+    }
 
-	public ArrayList<Item> getInventory() {
-		return inventory;
-	}
+    public ArrayList<Item> getInventory() {
+        return inventory;
+    }
 
-	public void setInventory(ArrayList<Item> inventory) {
-		this.inventory = inventory;
-	}
+    public void setInventory(ArrayList<Item> inventory) {
+        this.inventory = inventory;
+    }
 
-	public String getScent() {
-		return scent;
-	}
+    public String getScent() {
+        return scent;
+    }
 
-	public void setScent(String scent) {
-		this.scent = scent;
-	}
+    public void setScent(String scent) {
+        this.scent = scent;
+    }
 
-	public String getClothing() {
-		return clothing;
-	}
+    public String getClothing() {
+        return clothing;
+    }
 
-	public void setClothing(String clothing) {
-		this.clothing = clothing;
-	}
+    public void setClothing(String clothing) {
+        this.clothing = clothing;
+    }
 
-	/**
-	 * a method to retrieve the level of hunger of the player
-	 */
-	public int getHunger() {
-		return hunger;
-	}
+    /**
+     * a method to retrieve the level of hunger of the player
+     */
+    public int getHunger() {
+        return hunger;
+    }
 
-	/**
-	 * a method to change the clothing status of the player
-	 */
-	public void changeClothes(String clothing) {
-		this.clothing = clothing;
-	}
+    /**
+     * a method to change the clothing status of the player
+     */
+    public void changeClothes(String clothing) {
+        this.clothing = clothing;
+    }
+    
+    /**
+     * a method to check if an item in the player' inventory
+     */
+    public Item hasItem(ItemType neededItem){
+		if (inventory.size() > 0) {
+			for (Item item : inventory) {
+				if (item.getType() == neededItem) {
+					return item;
+				}
+			}
+		}
+		return null;
+    }
 
-	/**
-	 * a method to add an item to the player's inventory
-	 */
-	public void addItem(Item item) {
-		this.inventory.add(item);
-	}
+    /**
+     * a method to add an item to the player's inventory
+     */
+    public boolean addItem(Item newItem) {
+        if(this.carryWeight + newItem.getWeight() <= this.weightLimit){
+            this.inventory.add(newItem);
+            this.carryWeight += newItem.getWeight();
+            return true;
+        }else{
+             System.out.println("You are carrying too much to add this item! Put something down first!");
+             return false;
+        }
+    }
 
-	/**
-	 * a method to add a go move to the player's history
-	 */
-	public void addMove(String move) {
-		moveHistory.add(move);
-	}
+        /**
+     * a method to remove an item to the player's inventory
+     */
+    public Item removeItem(ItemType droppedItem) {
+        Item itemToDrop = this.hasItem(droppedItem);
+        if(itemToDrop!=null){
+            this.inventory.remove(itemToDrop);
+            this.carryWeight -= itemToDrop.getWeight();
+            return itemToDrop;
+        }else{
+             System.out.println("You are not carrying one of those!");
+             return null;
+        }
+    }
 
-	/**
-	 * a method to change the scent status of the player
-	 */
-	public void changeScent(String scent) {
-		this.scent = scent;
-	}
+    
+    /**
+     * a method to add a go move to the player's history
+     */
+    public void addMove(String move) {
+        moveHistory.add(move);
+    }
 
-	/**
-	 * a method to set the players current room
-	 */
-	public void setCurrentRoom(Room room) {
-		this.currentRoom = room;
-	}
+    /**
+     * a method to change the scent status of the player
+     */
+    public void changeScent(String scent) {
+        this.scent = scent;
+    }
+    
+    /**
+     * a method to give an analysis of the player's inventory
+     */
+    public void showInventory(){
+        if(!inventory.isEmpty()){
+            System.out.println("You are carrying the following items:");
+        
+            for(Item item : inventory){
+                System.out.println(" A " + item.getDescription() + " that weighs " + item.getWeight() + " units");
+            }
+        }else{
+            System.out.println("You are not currently carrying anything!");
+        }
+    }
 
-	/**
-	 * a method to set the players current room
-	 */
-	public Room getCurrentRoom() {
-		return currentRoom;
-	}
+    /**
+     * a method to set the players current room
+     */
+    public void setCurrentRoom(Room room) {
+        this.currentRoom = room;
+    }
+
+    /**
+     * a method to set the players current room
+     */
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 }
