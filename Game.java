@@ -55,9 +55,11 @@ public class Game {
         theater.addChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, "east"));
 
         pub.setExit("east", outside);
+        pub.addItem(new Item(ItemType.FOOD, "A bowl of nuts", 5.0));
 
         lab.setExit("north", outside);
         lab.setExit("east", office);
+        lab.addItem(new Item(ItemType.FOOD, "A can of pringles", 3.0));
 
         office.setExit("west", lab);
         office.addItem(new Item(ItemType.KEY, "A bronze key with three teeth", 60.0));
@@ -133,6 +135,9 @@ public class Game {
             break;
         case DROP:
             dropItem(command);
+            break;
+        case EAT:
+            player.eatFood();
             break;
         }
         return wantToQuit;

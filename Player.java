@@ -18,12 +18,12 @@ public class Player {
     private String scent;
     private String clothing;
     private int hunger = 0; // represents the level of hunger of the player
-    private final int fatalHunger = 30;   // the level of hunger at which the player die
+    private final int fatalHunger = 6;   // the level of hunger at which the player die
     private final int hungerWarning = fatalHunger / 3; // the level of hunger at which the player is warned
     private Room currentRoom;
     private double carryWeight; // the weight of the current inventory
     private double weightLimit = 80; // the max weight the player can carry
-    private boolean isDead = false;  
+    private boolean isAlive = true;  
 
     /**
      * Constructor for objects of class Player takes no parameters, but sets up
@@ -71,6 +71,49 @@ public class Player {
     }
 
     /**
+     * a method to attempt to eat a piece of food the player is carrying, returns true if successful
+     */
+    public boolean eatFood(){
+        boolean ateFood = false;
+        if(this.hunger <= 0){
+            System.out.println("You shouldn't eat yet, you're not hungry!");
+            return false;
+        }
+       
+        for(Item item : inventory){
+            if(item.getType() == ItemType.FOOD && !ateFood){
+                System.out.println("You remove " + item.getDescription() + " from your pack and eat it");
+                this.hunger = 0;
+                this.inventory.remove(item);
+                return true;
+            }
+        }
+        
+        if(!ateFood){
+            System.out.println("You have no food to eat! Find some!");
+            return false;
+        }
+        return false;
+    }
+ 
+    /**
+     * a method to increment the player's hunger status and 
+     */
+    public boolean checkHunger(){
+        this.hunger++;
+            if(this.hunger > this.fatalHunger){
+                System.out.println("You can't go on anymore, you have died from hunger!!!");
+                this.isAlive = false;
+                return false;
+            }else if(this.hunger == this.fatalHunger){
+                System.out.println("You feel sharp pains and you barely have the strength to move anymore, you must eat now!!!");
+            }else if(this.hunger == this.hungerWarning){
+                System.out.println("Your stomach is growling, it might be a good idea to find some food!!!");
+            }
+            return true;
+    }
+
+    /**
      * a method to retrieve the level of hunger of the player
      */
     public int getHunger() {
@@ -88,14 +131,14 @@ public class Player {
      * a method to check if an item in the player' inventory
      */
     public Item hasItem(ItemType neededItem){
-		if (inventory.size() > 0) {
-			for (Item item : inventory) {
-				if (item.getType() == neededItem) {
-					return item;
-				}
-			}
-		}
-		return null;
+        if (inventory.size() > 0) {
+            for (Item item : inventory) {
+                if (item.getType() == neededItem) {
+                    return item;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -164,21 +207,7 @@ public class Player {
         this.currentRoom = room;
     }
 
-    /**
-     * a method to increment the player's hunger status and 
-     */
-    public boolean checkHunger(){
-    this.hunger++;
-        if(this.hunger > this.fatalHunger){
-            System.out.println("You can't go on anymore, you have died from hunger!!!");
-            return false;
-        }else if(this.hunger == this.fatalHunger){
-            System.out.println("You feel sharp pains and you barely have the strength to move anymore, you must eat now!!!");
-        }else if(this.hunger == this.hungerWarning){
-            System.out.println("Your stomach is growling, it might be a good idea to find some food!!!");
-        }
-        return true;
-    }
+
     /**
      * a method to set the players current room
      */
@@ -190,6 +219,6 @@ public class Player {
      * tell the game if the player is alive or not
      */
     public boolean isLiving(){
-        return isDead;
+        return this.isAlive;
     }
 }
