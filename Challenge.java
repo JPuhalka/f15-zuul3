@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
 
 /**
  *
@@ -13,7 +12,7 @@ public class Challenge {
 
 	private final ChallengeType challengeType; // the type of the challenge
 	private final String description; // information about the object in a room
-	private final String blockedExit; // the name of the exit being blocked in a room
+	private final ExitType blockedExit; // the name of the exit being blocked in a room
 
 	/**
 	 * Constructor for objects of class Challenge
@@ -22,7 +21,7 @@ public class Challenge {
 	 * @param challengeType
 	 * @param exit
 	 */
-	public Challenge(String description, ChallengeType challengeType, String exit) {
+	public Challenge(String description, ChallengeType challengeType, ExitType exit) {
 		this.description = description;
 		this.challengeType = challengeType;
 		this.blockedExit = exit;
@@ -51,7 +50,7 @@ public class Challenge {
 	 *
 	 * @return String
 	 */
-	public String getBlockedExit() {
+	public ExitType getBlockedExit() {
 		return blockedExit;
 	}
 }
