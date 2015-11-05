@@ -79,7 +79,7 @@ public class Game {
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
         boolean finished = false;
-        while (!finished) {
+        while (!finished && player.isLiving()) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -228,9 +228,11 @@ public class Game {
             if (player.getCurrentRoom().canExit(direction) == false) {
                 System.out.println("Your path is blocked! " + player.getCurrentRoom().getChallengeText());
             } else {
-                player.setCurrentRoom(nextRoom);
-                player.addMove(direction);
-                System.out.println(player.getCurrentRoom().getLongDescription());
+                if(player.checkHunger()){
+                    player.setCurrentRoom(nextRoom);
+                    player.addMove(direction);
+                    System.out.println(player.getCurrentRoom().getLongDescription());
+                }
             }
         }
     }

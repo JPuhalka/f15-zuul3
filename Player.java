@@ -17,10 +17,13 @@ public class Player {
     private ArrayList<Item> inventory;
     private String scent;
     private String clothing;
-    private int hunger; // represents the level of hunger of the player
+    private int hunger = 0; // represents the level of hunger of the player
+    private final int fatalHunger = 30;   // the level of hunger at which the player die
+    private final int hungerWarning = fatalHunger / 3; // the level of hunger at which the player is warned
     private Room currentRoom;
     private double carryWeight; // the weight of the current inventory
     private double weightLimit = 80; // the max weight the player can carry
+    private boolean isDead = false;  
 
     /**
      * Constructor for objects of class Player takes no parameters, but sets up
@@ -155,16 +158,38 @@ public class Player {
     }
 
     /**
-     * a method to set the players current room
+     * a method to set the players current room, calls checkHunger
      */
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
     }
 
     /**
+     * a method to increment the player's hunger status and 
+     */
+    public boolean checkHunger(){
+    this.hunger++;
+        if(this.hunger > this.fatalHunger){
+            System.out.println("You can't go on anymore, you have died from hunger!!!");
+            return false;
+        }else if(this.hunger == this.fatalHunger){
+            System.out.println("You feel sharp pains and you barely have the strength to move anymore, you must eat now!!!");
+        }else if(this.hunger == this.hungerWarning){
+            System.out.println("Your stomach is growling, it might be a good idea to find some food!!!");
+        }
+        return true;
+    }
+    /**
      * a method to set the players current room
      */
     public Room getCurrentRoom() {
         return currentRoom;
+    }
+    
+    /**
+     * tell the game if the player is alive or not
+     */
+    public boolean isLiving(){
+        return isDead;
     }
 }
