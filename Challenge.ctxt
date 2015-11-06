@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.params=description\ challengeType\ exit
-comment0.target=Challenge(java.lang.String,\ ChallengeType,\ java.lang.String)
+comment0.target=Challenge(java.lang.String,\ ChallengeType,\ ExitType)
 comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Challenge\r\n\r\n\ @param\ description,\ the\ description\ of\ the\ challenge\r\n\ @param\ challengeType\r\n\ @param\ exit\r\n
 comment1.params=
 comment1.target=java.lang.String\ getDescription()
@@ -9,6 +9,6 @@ comment2.params=
 comment2.target=ChallengeType\ getChallengeType()
 comment2.text=\r\n\ a\ method\ to\ return\ the\ type\ of\ the\ challenge\r\n\r\n\ @return\ ChallengeType\r\n
 comment3.params=
-comment3.target=java.lang.String\ getBlockedExit()
+comment3.target=ExitType\ getBlockedExit()
 comment3.text=\r\n\ a\ method\ to\ return\ the\ name\ of\ the\ exit\ blocked\ by\ this\ challenge\r\n\r\n\ @return\ String\r\n
 numComments=4

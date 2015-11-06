@@ -99,7 +99,7 @@ public class Player {
 	}
 
 	/**
-	 * a method to increment the player's hunger status and
+	 * a method to increment the player's hunger status and return false if the player has died from hunger as a result
 	 */
 	public boolean checkHunger() {
 		this.hunger++;

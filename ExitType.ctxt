@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=id
+comment0.target=ExitType(java.lang.String)
+comment1.params=id
+comment1.target=ExitType\ getExitType(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getId()
+numComments=3

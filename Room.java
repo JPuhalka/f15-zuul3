@@ -223,7 +223,7 @@ public class Room {
 	 * @return
 	 */
 	public boolean canExit(ExitType exitToTest) {
-		return (challenge == null ? true : challenge.getBlockedExit().equals(exitToTest));
+		return (challenge == null ? true : !challenge.getBlockedExit().equals(exitToTest));
 	}
 
 	/**
