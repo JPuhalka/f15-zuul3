@@ -5,9 +5,7 @@
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -15,8 +13,8 @@ import java.util.Map;
  */
 public class Player {
 
-	private ArrayList<Room> moveHistory;
-	private Map<ItemType, Item> inventory;
+	private List<Room> moveHistory;
+	private List<Item> inventory;
 	private String scent;
 	private String clothing;
 	private int hunger = 0; // represents the level of hunger of the player
@@ -32,7 +30,7 @@ public class Player {
 	 * initial condition of player
 	 */
 	public Player() {
-		this.inventory = new HashMap<>(); // starts out carrying nothing;
+		this.inventory = new ArrayList<>(); // starts out carrying nothing;
 		this.moveHistory = new ArrayList<>(); // starts out with no moves
 		this.scent = "foul"; // the player starts out in a stable ... he smells like shit
 		this.clothing = "naked"; // the player starts out naked, sucks for him
@@ -40,19 +38,19 @@ public class Player {
 		this.carryWeight = 0;
 	}
 
-	public ArrayList<Room> getMoveHistory() {
+	public List<Room> getMoveHistory() {
 		return moveHistory;
 	}
 
-	public void setMoveHistory(ArrayList<Room> moveHistory) {
+	public void setMoveHistory(List<Room> moveHistory) {
 		this.moveHistory = moveHistory;
 	}
 
-	public Map<ItemType, Item> getInventory() {
+	public List getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Map<ItemType, Item> inventory) {
+	public void setInventory(List<Item> inventory) {
 		this.inventory = inventory;
 	}
 
@@ -83,11 +81,11 @@ public class Player {
 			return false;
 		}
 
-		for (Map.Entry<ItemType, Item> inventoryItem : inventory.entrySet()) {
-			if (inventoryItem.getKey() == ItemType.FOOD && !ateFood) {
-				System.out.println("You remove " + inventoryItem.getValue().getDescription() + " from your pack and eat it");
+		for (Item inventoryItem : inventory) {
+			if (inventoryItem.getType() == ItemType.FOOD && !ateFood) {
+				System.out.println("You remove " + inventoryItem.getDescription() + " from your pack and eat it");
 				hunger = 0;
-				inventory.remove(inventoryItem.getKey());
+				inventory.remove(inventoryItem);
 				return true;
 			}
 		}
@@ -138,7 +136,12 @@ public class Player {
 	 * @return true or false
 	 */
 	public boolean hasInventory(ItemType key) {
-		return inventory.containsKey(key);
+		for (Item inventoryItem : inventory) {
+			if (inventoryItem.getType() == key) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -148,7 +151,12 @@ public class Player {
 	 * @return item lookup by key
 	 */
 	public Item getInventory(ItemType key) {
-		return inventory.get(key);
+		for (Item inventoryItem : inventory) {
+			if (inventoryItem.getType() == key) {
+				return inventoryItem;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -159,8 +167,9 @@ public class Player {
 	 */
 	public void removeInventory(ItemType key) {
 		if (hasInventory(key)) {
-			carryWeight -= getInventory(key).getWeight();
-			inventory.remove(key);
+			Item item = getInventory(key);
+			carryWeight -= item.getWeight();
+			inventory.remove(item);
 		} else {
 			System.out.println("That item is not in your inventory\n");
 		}
@@ -171,13 +180,15 @@ public class Player {
 	 * limit - if not print a message
 	 *
 	 * @param item
+	 * @return true or false if item was added successfully
 	 */
-	public void addInventory(Item item) {
+	public boolean addInventory(Item item) {
 		if (carryWeight + item.getWeight() <= weightLimit) {
-			inventory.put(item.getType(), item);
+			inventory.add(item);
 			carryWeight += item.getWeight();
+			return true;
 		} else {
-			System.out.println("You are carrying too much weight to add this item! Put something down first!");
+			return false;
 		}
 	}
 
@@ -204,10 +215,9 @@ public class Player {
 		if (inventory.isEmpty()) {
 			System.out.println("You are not currently carrying anything!");
 		} else {
-			sBuffer.append("Items: ");
-			for (Map.Entry<ItemType, Item> inventoryItem : inventory.entrySet()) {
-				sBuffer.append(inventoryItem.getKey().getId()).append(" - ").append(inventoryItem.getValue().getDescription()).append(" that weighs ")
-						.append(inventoryItem.getValue().getWeight()).append(" units");
+			sBuffer.append("Items:\n");
+			for (Item inventoryItem : inventory) {
+				sBuffer.append(inventoryItem.getDescription()).append(" that weighs ").append(inventoryItem.getWeight()).append(" units").append("\n");
 			}
 			sBuffer.append("\n");
 		}
@@ -223,7 +233,7 @@ public class Player {
 		if (moveHistory.isEmpty()) {
 			System.out.println("You havent moved");
 		} else {
-			sBuffer.append("Moves: ");
+			sBuffer.append("Moves:\n");
 			for (Room move : moveHistory) {
 				sBuffer.append(move.getDescription()).append("\n");
 			}

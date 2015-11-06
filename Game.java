@@ -50,7 +50,7 @@ public class Game {
 
 		theater.addExit(ExitType.WEST, outside);
 		theater.addExit(ExitType.EAST, lab);
-		theater.setChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, ExitType.EAST));
+		theater.setChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, ExitType.EAST, ItemType.KEY));
 
 		pub.addExit(ExitType.EAST, outside);
 		pub.addItem(new Item(ItemType.FOOD, "A bowl of nuts", 5.0));
@@ -144,6 +144,9 @@ public class Game {
 		case BACK:
 			goBack(command);
 			break;
+		case USE:
+			useItem();
+			break;
 		}
 		return wantToQuit;
 	}
@@ -172,6 +175,25 @@ public class Game {
 	}
 
 	/**
+	 * Use command
+	 *
+	 */
+	private void useItem() {
+		if (!player.getCurrentRoom().hasChallenge()) {
+			System.out.println("There is no challenge here");
+		} else {
+			ItemType itemType = player.getCurrentRoom().getChallenge().getResolution();
+			if (player.hasInventory(itemType)) {
+				System.out.println("You have used the " + itemType + " to pass the challenge - you may go now.\n");
+				player.removeInventory(itemType);
+				player.getCurrentRoom().removeChallenge();
+			} else {
+				System.out.println("You need a " + itemType + " to pass the challenge and you don't have it - go find it.\n");
+			}
+		}
+	}
+
+	/**
 	 * Take command
 	 *
 	 * @param command
@@ -186,9 +208,12 @@ public class Game {
 		ItemType itemId = ItemType.getItemType(command.getSecondWord());
 		if (player.getCurrentRoom().hasItem(itemId)) {
 			Item item = player.getCurrentRoom().getItem(itemId);
-			player.getCurrentRoom().takeItem(itemId);
-			player.addInventory(item);
-			System.out.println("You took " + item.getDescription() + " and added it to your inventory.\n");
+			if (player.addInventory(item)) {
+				player.getCurrentRoom().takeItem(itemId);
+				System.out.println("You took " + item.getDescription() + " and added it to your inventory.\n");
+			} else {
+				System.out.println("You are carrying too much weight to add this item! Put something down first!");
+			}
 		} else {
 			System.out.println(itemId + " is not in this room.\n");
 		}

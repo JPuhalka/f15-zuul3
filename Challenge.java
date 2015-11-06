@@ -1,43 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
+ * This class is part of the "World of Zuul" application. "World of Zuul" is a
+ * very simple, text based adventure game.
  *
- * @author jennifermoran
+ * This class holds information about the challenge that a user faces.
+ *
+ * @author Jennifer M and Andrew and Jennifer P
+ * @version 2015.11.06
  */
 public class Challenge {
 
 	private final ChallengeType challengeType; // the type of the challenge
 	private final String description; // information about the object in a room
 	private final ExitType blockedExit; // the name of the exit being blocked in a room
+	private final ItemType resolution; // the resolution needed to pass the challenge
 
 	/**
 	 * Constructor for objects of class Challenge
 	 *
 	 * @param description, the description of the challenge
-	 * @param challengeType
+	 * @param challengeType what type of
 	 * @param exit
+	 * @param resolution
 	 */
-	public Challenge(String description, ChallengeType challengeType, ExitType exit) {
+	public Challenge(String description, ChallengeType challengeType, ExitType exit, ItemType resolution) {
 		this.description = description;
 		this.challengeType = challengeType;
 		this.blockedExit = exit;
+		this.resolution = resolution;
 	}
 
 	/**
-	 * a method to return the description of the challenge
+	 * Description Getter
 	 *
-	 * @return String
+	 * @return description
 	 */
 	public String getDescription() {
 		return this.description;
 	}
 
 	/**
-	 * a method to return the type of the challenge
+	 * ChallengeType Getter
 	 *
 	 * @return ChallengeType
 	 */
@@ -46,11 +48,21 @@ public class Challenge {
 	}
 
 	/**
-	 * a method to return the name of the exit blocked by this challenge
+	 * Blocked Exit Getter
 	 *
-	 * @return String
+	 * @return ExitType
 	 */
 	public ExitType getBlockedExit() {
 		return blockedExit;
 	}
+
+	/**
+	 * Resolution Getter
+	 *
+	 * @return ItemType
+	 */
+	public ItemType getResolution() {
+		return resolution;
+	}
+
 }

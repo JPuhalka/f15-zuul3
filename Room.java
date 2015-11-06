@@ -203,6 +203,22 @@ public class Room {
 	}
 
 	/**
+	 * Return boolean whether room has a challenge
+	 *
+	 * @return true or false
+	 */
+	public boolean hasChallenge() {
+		return challenge != null;
+	}
+
+	/**
+	 * Remove a challenge when user has presented resolution item
+	 */
+	public void removeChallenge() {
+		challenge = null;
+	}
+
+	/**
 	 * Take an item out of the room - if it is not located in the room print a
 	 * message
 	 *
