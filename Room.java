@@ -1,214 +1,238 @@
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ArrayList;
-
-/**
- * Class Room - a room in an adventure game.
- *
- * This class is part of the "Escape with Dignity" application. 
- * 
- * A "Room" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
- * 
- * @authors Jennifer Puhalka and Andrew Worthington
- * @version 2015.11.02
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
-public class Room 
-{
-    private String description;
-    private HashMap<String, Room> exits;        // stores exits of this room.
-    private ArrayList<Item> items;         // any items contained in the room, with an assigned description
-    private ArrayList<Challenge> challenges;  // any challenges contained in the room with an associated description   
+import java.util.HashMap;
+import java.util.Map;
 
-    
-    /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * @param description The room's description.
-     *      no Item or Challenge present in the room
-     */
-    public Room(String description) 
-    {
-        this.description = description;
-        this.items = new ArrayList<Item>();
-        this.challenges = new ArrayList<Challenge>();
-        exits = new HashMap<String, Room>();
-    }
-    
-    /**
-     * Define an item or feature in this room that can be interacted with
-     * @param itemDescription - a string depicting the item or feature in the area that can be interacted with
-     * @param item - the enum of the item or feature in the room used by the game
-     */
-    public void addItem(String roomDescription, ItemType item, String itemDescription){
-        this.items.add(new Item(roomDescription, item, itemDescription));
-    }
-    
-    /**
-     * Define an item or feature in this room that can be interacted with
-     * @param challengeDescription - a string depicting an obstacle in the room, hindering use of an exit
-     * @param challenge - the enum of the challenge in the room
-     * @param blockedExit - the String corresponding to an exit in the room being impeeded by the challenge.
-     */
-    public void addChallenge(String challengeDescription, ChallengeType challenge, String blockedExit){
-        this.challenges.add(new Challenge(challengeDescription, challenge, blockedExit));
-    }
-    
-    /**
-     * Define an exit from this room.
-     * @param direction The direction of the exit.
-     * @param neighbor  The room to which the exit leads.
-     */
-    public void setExit(String direction, Room neighbor) 
-    {
-        exits.put(direction, neighbor);
-    }
+/**
+ *
+ * @author jennifermoran
+ */
+public class Room {
 
-    /**
-     * @return The short description of the room
-     * (the one that was defined in the constructor).
-     */
-    public String getShortDescription()
-    {
-        return description;
-    }
+	private String description;
+	private Map<ExitType, Room> exits = new HashMap<>();
+	private Map<ItemType, Item> items = new HashMap<>();
+	private Challenge challenge;
 
-    /**
-     * Return a description of the room in the form:
-     *     You are in the kitchen.
-     *     Exits: north west
-     * @return A long description of this room
-     */
-    public String getLongDescription()
-    {
-        return "You are " + description + ".\n" + getExitString();
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param description - Room description
+	 */
+	public Room(String description) {
+		this.description = description;
+	}
 
-    /**
-     * Returns a description of the room including any items or challenges in the room in the form:
-     *    You are in the bedroom.
-     *    There is a bottle of perfume on a nightstand.
-     *    
-     *    or
-     *    
-     *    You are in a long hallway.
-     *    There is a drowsy guard blocking the eastern exit.
-     *    
-     *    @return A detailed examination of the room, plus the exits
-     */
-    public String getRoomExamination()
-    {
-        return "You are " + description + ".\n" + getLookString() + getExitString();
-        
-    }
-    
-    /**
-     * Return a string describing the room's exits, for example
-     * "Exits: north west".
-     * @return Details of the room's exits.
-     */
-    private String getExitString()
-    {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for(String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
-    }
-    
-    /**
-     * Returns a string describing any items or challenges in the room, for example
-     * "There is a locked gate at the east end of the courtyard"
-     */
-    private String getLookString()
-    {
-        String returnString = "";
-        if(challenges.size()>0){
-            for(Challenge challenge : challenges) {
-                returnString += challenge.getDescription() + ".\n";
-            }
-        }
-        if(items.size()>0){
-            for(Item item : items) {
-                returnString += item.getRoomDescription() + ".\n";
-            } 
-        }if(challenges.size() == 0 && items.size() == 0){
-            returnString = "There is nothing remarkable here\n";
-        }
-        
-        return returnString;
-    }
-    
-    /**
-     * a method to test to see if a room has an item of a certain type, if so returns that item, otherwise returns null
-     */
-    private Item hasItem(ItemType itemType){
-        if(items.size()>0){
-            for(Item item : items){
-                if(item.getItemType() == itemType)
-                    return item;
-            }
-        }
-        return null;
-    }
-    
-    /** 
-     * a method to remove an item from a room after it has been taken by a player
-     * returns the item in question
-     */
-    public Item takeItem(ItemType itemIWant){
-        if(items.size()>0 && this.hasItem(itemIWant)!= null){
-            Item itemToRemove = this.hasItem(itemIWant);
-            items.remove(itemToRemove);
-            return itemToRemove;
-        }else{
-            System.out.println("That item is not in this room\n");
-            return null;
-        }
-    }
-    
-    /**
-     * Test to see if player can move out of this room unimpeeded
-     */
-    public boolean canExit(String exitToTest){
-        boolean wayIsClear = true;
-        if(challenges.size()>0){
-            for(Challenge challenge : challenges){
-                if(challenge.getBlockedExit().equals(exitToTest))
-                    wayIsClear = false;
-            }
-        }
-        return wayIsClear;
-    }
-    
-    /**
-     * returns the description of challenges in the room
-     */
-    public String getChallengeText(){
-        String returnString = "";
-        if(challenges.size()>0){
-            for(Challenge challenge : challenges){
-               returnString += challenge.getDescription() + ".\n";
-            }
-        }else{
-            returnString = "There is no challenge in this room!";
-        }
-        return returnString;
-    }
-    /**
-     * Return the room that is reached if we go from this room in direction
-     * "direction". If there is no room in that direction, return null.
-     * @param direction The exit's direction.
-     * @return The room in the given direction.
-     */
-    public Room getExit(String direction) 
-    {
-        return exits.get(direction);
-    }
+	/**
+	 * Description getter
+	 *
+	 * @return room description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * Description setter
+	 *
+	 * @param description - room description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * Exits getter
+	 *
+	 * @return map of exit type and room object which defines new room after
+	 *         exiting
+	 */
+	public Map<ExitType, Room> getExits() {
+		return exits;
+	}
+
+	/**
+	 * Exits setter
+	 *
+	 * @param exits - map of exit type and room object which defines new room
+	 *            after exiting
+	 */
+	public void setExits(Map<ExitType, Room> exits) {
+		this.exits = exits;
+	}
+
+	/**
+	 * Items getter
+	 *
+	 * @return map of item objects found in room
+	 */
+	public Map<ItemType, Item> getItems() {
+		return items;
+	}
+
+	/**
+	 * Single Items getter
+	 *
+	 * @param key - key for lookup
+	 * @return item lookup by key
+	 */
+	public Item getItem(ItemType key) {
+		return items.get(key);
+	}
+
+	/**
+	 * Items setter
+	 *
+	 * @param items - list of item objects found in room
+	 */
+	public void setItems(Map<ItemType, Item> items) {
+		this.items = items;
+	}
+
+	/**
+	 * Challenge getter
+	 *
+	 * @return challenge
+	 */
+	public Challenge getChallenge() {
+		return challenge;
+	}
+
+	/**
+	 * Challenge Setter
+	 *
+	 * @param challenge
+	 */
+	public void setChallenge(Challenge challenge) {
+		this.challenge = challenge;
+	}
+
+	/**
+	 * Add a single item to the room
+	 *
+	 * @param item - item object
+	 */
+	public void addItem(Item item) {
+		items.put(item.getType(), item);
+	}
+
+	/**
+	 * Add an exit from this room
+	 *
+	 * @param direction - exit type of direction
+	 * @param neighbor - room object of new room after exiting
+	 */
+	public void addExit(ExitType direction, Room neighbor) {
+		exits.put(direction, neighbor);
+	}
+
+	/**
+	 * Retrieve a description of room and all exits
+	 *
+	 * @return long description
+	 */
+	public String getLongDescription() {
+		return "You are " + description + ".\n" + showAllExits();
+	}
+
+	/**
+	 * Retrieve a description of room including all items and all exits
+	 *
+	 * @return detailed room description
+	 */
+	public String getRoomExamination() {
+		return "You are " + getDescription() + ".\n" + showAllItems() + showChallenge() + showAllExits();
+
+	}
+
+	/**
+	 * Retrieve a description of all exits
+	 *
+	 * @return exit details
+	 */
+	private String showAllExits() {
+		StringBuilder sBuffer = new StringBuilder();
+		sBuffer.append("Exits: ");
+		for (Map.Entry<ExitType, Room> exit : exits.entrySet()) {
+			sBuffer.append(exit.getKey().getId()).append(" ");
+		}
+		return sBuffer.toString();
+	}
+
+	/**
+	 * Retrieve a description of all items
+	 *
+	 * @return item details or if none then a default message
+	 */
+	private String showAllItems() {
+		StringBuilder sBuffer = new StringBuilder();
+
+		if (items.isEmpty()) {
+			sBuffer.append("There is nothing remarkable here\n");
+		} else {
+			sBuffer.append("Items: ");
+			for (Map.Entry<ItemType, Item> item : items.entrySet()) {
+				sBuffer.append(item.getKey().getId()).append(" ");
+			}
+			sBuffer.append("\n");
+		}
+		return sBuffer.toString();
+	}
+
+	private String showChallenge() {
+		StringBuilder sBuffer = new StringBuilder();
+		if (challenge != null) {
+			sBuffer.append("Blocking your way, there is: \n");
+			sBuffer.append(challenge.getDescription()).append(" keeping you from going ").append(challenge.getBlockedExit()).append("\n");
+		}
+		return sBuffer.toString();
+	}
+
+	/**
+	 * Return boolean whether an item is located in the room
+	 *
+	 * @param key - key for lookup
+	 * @return true or false
+	 */
+	public boolean hasItem(ItemType key) {
+		return items.containsKey(key);
+	}
+
+	/**
+	 * Take an item out of the room - if it is not located in the room print a
+	 * message
+	 *
+	 * @param key - item being removed
+	 */
+	public void takeItem(ItemType key) {
+		if (hasItem(key)) {
+			items.remove(key);
+		} else {
+			System.out.println("That item is not in this room\n");
+		}
+	}
+
+	/**
+	 * Test to see if player can move out of this room unimpeeded
+	 *
+	 * @param exitToTest
+	 * @return
+	 */
+	public boolean canExit(ExitType exitToTest) {
+		return (challenge == null ? true : challenge.getBlockedExit().equals(exitToTest));
+	}
+
+	/**
+	 * Retrieve the next room based on the exit direction
+	 *
+	 * @param direction - direction of exit
+	 * @return room object of next room
+	 */
+	public Room getNextRoom(ExitType direction) {
+		return exits.get(direction);
+	}
 }
-

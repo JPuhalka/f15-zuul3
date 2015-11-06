@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
 
 /**
  *
  * @author jennifermoran
  */
-public enum ChallengeType {
+public class Main {
 
-	GATE, MAIDEN, GUARD, APOTHECARY, UNKOWN
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		Game game = new Game();
+		game.play();
+	}
 }

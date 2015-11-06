@@ -1,52 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 /**
- * Class Challenge - an Challenge in an Adventure game.
  *
- * This class is part of the "Escape with Dignity" application. 
- * 
- * An "Challenge" represents one object a player needs to hold or interact with to overcome obstacles
- * 
- * @authors Jennifer Puhalka and Andrew Worthington
- * @version 2015.11.02
+ * @author jennifermoran
  */
-public class Challenge
-{
-    private ChallengeType challengeType; // the type of the challenge
-    private String description;  // information about the object in a room
-    private String blockedExit; // the name of the exit being blocked in a room
+public class Challenge {
 
-    /**
-     * Constructor for objects of class Challenge
-     * @param description, the description of the challenge
-     */
-    public Challenge(String description, ChallengeType challengeType, String exit)
-    {
-        this.description = description;
-        this.challengeType = challengeType;
-        this.blockedExit = exit;
-    }
+	private final ChallengeType challengeType; // the type of the challenge
+	private final String description; // information about the object in a room
+	private final ExitType blockedExit; // the name of the exit being blocked in a room
 
-    /**
-     * a method to return the description of the challenge
-     */
-    public String getDescription()
-    {
-        return this.description;
-    }
-    
-    /**
-     * a method to return the type of the challenge
-     */
-    public ChallengeType getChallengeType()
-    {
-        return this.challengeType;
-    }
-    
-    /**
-     * a method to return the name of the exit blocked by this challenge
-     */
-    public String getBlockedExit()
-    {
-        return blockedExit;
-    }
+	/**
+	 * Constructor for objects of class Challenge
+	 *
+	 * @param description, the description of the challenge
+	 * @param challengeType
+	 * @param exit
+	 */
+	public Challenge(String description, ChallengeType challengeType, ExitType exit) {
+		this.description = description;
+		this.challengeType = challengeType;
+		this.blockedExit = exit;
+	}
+
+	/**
+	 * a method to return the description of the challenge
+	 *
+	 * @return String
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+
+	/**
+	 * a method to return the type of the challenge
+	 *
+	 * @return ChallengeType
+	 */
+	public ChallengeType getChallengeType() {
+		return this.challengeType;
+	}
+
+	/**
+	 * a method to return the name of the exit blocked by this challenge
+	 *
+	 * @return String
+	 */
+	public ExitType getBlockedExit() {
+		return blockedExit;
+	}
 }

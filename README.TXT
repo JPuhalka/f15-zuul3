@@ -1,21 +1,9 @@
-Project: zuul-with-enums-v1
-Authors: Michael Kölling and David J. Barnes
+﻿Project: Escape With Dignity
+Authors: Jenn P, Jen M, and Andrew W
 
-This project is part of the material for the book
+This project is a simple text-based adventure game where a player must navigate a labryinth,
+collecting items and satisfying challenges.
 
-   Objects First with Java - A Practical Introduction using BlueJ
-   Fifth edition
-   David J. Barnes and Michael Kölling
-   Pearson Education, 2012
-   
-This project is a simple framework for an adventure game. In this version,
-it has a few rooms and the ability for a player to walk between these rooms.
-That's all.
+Finish filling this out later.
 
-To start this application, create an instance of class "Game" and call its
-"play" method.
 
-This project was written to illustrate the use of enums to support
-language independence of the game logic.
-
-Read chapter 7 of the book to get a detailed description of the project.
