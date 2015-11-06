@@ -6,6 +6,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public class Player {
 	private String scent;
 	private String clothing;
 	private int hunger = 0; // represents the level of hunger of the player
-	private final int fatalHunger = 6; // the level of hunger at which the player die
+	private final int fatalHunger = 66; // the level of hunger at which the player die
 	private final int hungerWarning = fatalHunger / 3; // the level of hunger at which the player is warned
 	private Room currentRoom;
 	private double carryWeight; // the weight of the current inventory
@@ -99,7 +100,8 @@ public class Player {
 	}
 
 	/**
-	 * a method to increment the player's hunger status and return false if the player has died from hunger as a result
+	 * a method to increment the player's hunger status and return false if the
+	 * player has died from hunger as a result
 	 */
 	public boolean checkHunger() {
 		this.hunger++;
@@ -206,6 +208,24 @@ public class Player {
 			for (Map.Entry<ItemType, Item> inventoryItem : inventory.entrySet()) {
 				sBuffer.append(inventoryItem.getKey().getId()).append(" - ").append(inventoryItem.getValue().getDescription()).append(" that weighs ")
 						.append(inventoryItem.getValue().getWeight()).append(" units");
+			}
+			sBuffer.append("\n");
+		}
+		return sBuffer.toString();
+	}
+
+	/**
+	 * a method to give an analysis of the player's inventory
+	 */
+	public String showMoves() {
+		StringBuilder sBuffer = new StringBuilder();
+
+		if (moveHistory.isEmpty()) {
+			System.out.println("You havent moved");
+		} else {
+			sBuffer.append("Moves: ");
+			for (Room move : moveHistory) {
+				sBuffer.append(move.getDescription()).append("\n");
 			}
 			sBuffer.append("\n");
 		}

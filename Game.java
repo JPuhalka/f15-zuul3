@@ -75,6 +75,7 @@ public class Game {
 	public void play() {
 		// start outside
 		player.setCurrentRoom(rooms.get(OUTSIDE));
+		player.addMove(rooms.get(OUTSIDE));
 		printWelcome();
 		// Enter the main command loop. Here we repeatedly read commands and
 		// execute them until the game is over.
@@ -137,6 +138,12 @@ public class Game {
 		case EAT:
 			player.eatFood();
 			break;
+		case MOVES:
+			showMoves();
+			break;
+		case BACK:
+			goBack(command);
+			break;
 		}
 		return wantToQuit;
 	}
@@ -188,15 +195,25 @@ public class Game {
 	}
 
 	/**
-	 * Print out information about any items or challenges in the room
+	 * Look command
 	 */
 	private void examineRoom() {
 		System.out.println(player.getCurrentRoom().getRoomExamination());
 
 	}
 
+	/**
+	 * Inventory command
+	 */
 	private void showInventory() {
 		System.out.println(player.showInventory());
+	}
+
+	/**
+	 * Moves Command
+	 */
+	private void showMoves() {
+		System.out.println(player.showMoves());
 	}
 
 	/**
@@ -242,6 +259,32 @@ public class Game {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Back command
+	 *
+	 * @param command
+	 */
+	private void goBack(Command command) {
+		int howMany = 1;
+		if (command.hasSecondWord()) {
+			try {
+				howMany = Integer.parseInt(command.getSecondWord());
+			} catch (NumberFormatException nfe) {
+				System.out.println("Number of moves back must be blank (1 move) or numeric");
+				return;
+			}
+		}
+
+		if (player.getMoveHistory().size() <= howMany) {
+			System.out.println("You only have " + player.getMoveHistory().size() + " move(s)");
+			return;
+		}
+
+		player.getMoveHistory().subList(player.getMoveHistory().size() - howMany, player.getMoveHistory().size()).clear();
+		player.setCurrentRoom(player.getMoveHistory().get(player.getMoveHistory().size() - 1));
+		System.out.println(player.getCurrentRoom().getLongDescription());
 	}
 
 	/**

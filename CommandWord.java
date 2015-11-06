@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -15,7 +14,8 @@ import java.util.Map;
  */
 public enum CommandWord {
 
-	GO("go"), LOOK("look"), EAT("eat"), TAKE("take"), DROP("drop"), QUIT("quit"), HELP("help"), INVENTORY("inventory"), UNKNOWN("unknown");
+	GO("go"), MOVES("moves"), BACK("back"), LOOK("look"), EAT("eat"), TAKE("take"), DROP("drop"), QUIT("quit"), HELP("help"), INVENTORY("inventory"), UNKNOWN(
+			"unknown");
 	String id;
 	private static final Map<String, CommandWord> lookup = new HashMap<>();
 
