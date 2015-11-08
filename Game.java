@@ -125,7 +125,6 @@ public class Game {
         hallwayW.addExit(ExitType.EAST, hallwayE);
 
         stable.addExit(ExitType.NORTH, courtyard);
-        stable.addExit(ExitType.SOUTH, armory);
 
         ballroomN.addExit(ExitType.SOUTH, ballroomS);
         ballroomN.addExit(ExitType.EAST, gazebo);
@@ -142,9 +141,7 @@ public class Game {
 
         library.addExit(ExitType.NORTH, hallwayE);
         library.addExit(ExitType.EAST, goal);
-        library.addExit(ExitType.WEST, armory);
 
-        armory.addExit(ExitType.NORTH, stable);
         armory.addExit(ExitType.SOUTH, apothecarysHerbGarden);
         armory.addExit(ExitType.EAST, library);
 
@@ -205,24 +202,33 @@ public class Game {
 		rooms.put(STABLE, stable);
 
 		//list of items in rooms
+		stable.addItem(new Item(ItemType.GRAINSACK, "a grainsack", 5.0));
+		stable.addItem(new Item(ItemType.BUCKET, "a bucket", 20.0));
 		kitchen.addItem(new Item(ItemType.FOOD, "a leg of lamb sitting on the counter", 10.0));
 		diningHall.addItem(new Item(ItemType.FOOD, "a tray of appetizers", 5.0));
-		servantsQuart.addItem(new Item(ItemType.SERVANTSCLOTHES, "servant's clothing", 0));
-		washroom.addItem(new Item(ItemType.BATH, "water", 5.0));
+		closetStair.addItem(new Item(ItemType.MOP, "a mop", 20.0));
+		closetStair.addItem(new Item(ItemType.BUCKET, "a bucket", 20.0));
+		servantsQuart.addItem(new Item(ItemType.SERVANTSCLOTHES, "servant's clothing", 5.0));
+		washroom.addItem(new Item(ItemType.WATER, "water", 5.0));
 		library.addItem(new Item(ItemType.FOOD, "a bowl of nuts", 5.0));
 		library.addItem(new Item(ItemType.BOOK, "an old book", 10.0));
 		armory.addItem(new Item(ItemType.SWORD, "a sword", 60.0));
 		ladysBed.addItem(new Item(ItemType.PERFUME, "a bottle of perfume from the dresser", 5.0));
 		mensBed.addItem(new Item(ItemType.COLOGNE, "a bottle of cologne from the dresser", 5.0));
-		ladysCloset.addItem(new Item(ItemType.DRESS, "a dress", 0));
-		mensCloset.addItem(new Item(ItemType.SUIT, "a suit", 0));
+		ladysCloset.addItem(new Item(ItemType.DRESS, "a dress", 5.0));
+		mensCloset.addItem(new Item(ItemType.SUIT, "a suit", 5.0));
 		kitchenGarden.addItem(new Item(ItemType.FOOD, "a basket of carrots", 5.0));
 		apothecarysHerbGarden.addItem(new Item(ItemType.HERBS, "some strange herbs", 1.0));
 		mensBed.addItem(new Item(ItemType.KEY, "a bronze key with three teeth", 60.0));
 
 		//challenges
-		kitchen.setChallenge(new Challenge("You're naked, put on some clothing", ChallengeType.CLOTHING, ExitType.EAST, ItemType.KEY));
-		topStairs.setChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, ExitType.SOUTH, ItemType.KEY));
+		stable.setChallenge(new Challenge("You aren't wearing anything.  Is there something you could use as clothing?", ChallengeType.CLOTHING, ExitType.NORTH, ItemType.GRAINSACK));
+		servantsQuart.setChallenge(new Challenge("You need to wash.", ChallengeType.WASH, ExitType.EAST, ItemType.WATER));
+		sittingRoom.setChallenge(new Challenge("You need to use servant's clothing to get in.", ChallengeType.MAID, ExitType.EAST, ItemType.SERVANTSCLOTHES));
+		topStairs.setChallenge(new Challenge("There's a guard sleeping next to the door to the gentlemen's bedroom.", ChallengeType.GUARD, ExitType.SOUTH, ItemType.DRESS));
+		southGarden.setChallenge(new Challenge("The apothecary won't let you pass.  He wants an old book from the library.", ChallengeType.APOTHECARY, ExitType.WEST, ItemType.BOOK));
+		apothecarysHerbGarden.setChallenge(new Challenge("You must use men's clothing to get into the armory.", ChallengeType.SWORD, ExitType.NORTH, ItemType.SUIT));
+		library.setChallenge(new Challenge("There's a secret pasage but you need a sword to pry open the door.", ChallengeType.SECRETPASSAGE, ExitType.EAST, ItemType.SWORD));
 	}
 
 	/**
