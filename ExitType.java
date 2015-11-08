@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public enum ExitType {
 
-	NORTH("north"), SOUTH("south"), EAST("east"), WEST("west");
+	NORTH("north"), SOUTH("south"), EAST("east"), WEST("west"), UP("up"), DOWN("down"), JUMP("jump");
 	String id;
 	private static final Map<String, ExitType> lookup = new HashMap<>();
 

@@ -16,11 +16,31 @@ public class Game {
 	private final Parser parser;
 	private final Player player;
 	private final Map<String, Room> rooms = new HashMap<>();
-	private static final String OUTSIDE = "outside";
-	private static final String LAB = "lab";
-	private static final String PUB = "pub";
-	private static final String THEATER = "theater";
-	private static final String OFFICE = "office";
+	private static final String STABLE = "stable";
+	private static final String COURTYARD = "courtyard";
+	private static final String KITCHEN = "kitchen";
+	private static final String DININGHALL = "dining Hall";
+	private static final String GRANDSTAIRCASE = "grand staircase";
+	private static final String CLOSETSTAIR = "closet under the stairs";
+	private static final String HALLWAYE = "east end of hallway";
+	private static final String HALLWAYW = "west end of hallway";
+	private static final String BALLROOMN = "north end of ballroom";
+	private static final String BALLROOMS = "south end of ballroom";
+	private static final String SERVANTSQUART = "servant's quarters";
+	private static final String WASHROOM = "washroom";
+	private static final String LIBRARY = "library";
+	private static final String ARMORY = "armory";
+	private static final String SITTINGROOM = "sitting room";
+	private static final String LADYSBED = "lady's bedroom";
+	private static final String TOPSTAIRS = "top of the stairs";
+	private static final String ROOF = "on the roof";
+	private static final String MENSBED = "bedroom";
+	private static final String LADYSCLOSET = "lady's bedroom closet";
+	private static final String MENSCLOSET = "gentlemen's closet";
+	private static final String MAID = "closet under the stairs";
+	private static final String STORAGECLOSET = "closet under the stairs";
+	private static final String GOAL = "closet under the stairs";
+	private static final String KITCHENGARDEN = "";
 
 	/**
 	 * Create the game and initialize its internal map.
@@ -35,38 +55,174 @@ public class Game {
 	 * Create all the rooms and link their exits together.
 	 */
 	private void createRooms() {
+
+		Room courtyard, kitchen, diningHall,grandStaircase, closetStair, hallwayE, hallwayW,
+		stable, ballroomN, ballroomS, servantsQuart, washroom, library, armory, sittingRoom, ladysBed,
+        topStairs, roof, mensBed, ladysCloset, mensCloset, maid, storageCloset, goal, kitchenGarden,
+        shed, northGardens, gazebo, fountain, southGarden, apothecarysShed, apothecarysHerbGarden;
+
 		// create the rooms
-		Room outside = new Room("outside the main entrance of the university");
-		Room theater = new Room("in a lecture theater");
-		Room pub = new Room("in the campus pub");
-		Room lab = new Room("in a computing lab");
-		Room office = new Room("in the computing admin office");
+        courtyard = new Room("in the courtyard");
+        kitchen = new Room("in the kitchen");
+        diningHall = new Room("in the dining hall");
+        grandStaircase = new Room("at the Grand Staircase");
+        closetStair = new Room("in the closet behind the stairs");
+        hallwayE = new Room("at the east end of the hallway");
+        hallwayW = new Room("at the west end of the hallway");
+        stable = new Room("in the stable");
+        ballroomN = new Room("in the north end of the ballroom");
+        ballroomS = new Room("in the south end of the ballroom");
+        servantsQuart = new Room("in the servant's quarters");
+        washroom = new Room("in the washroom");
+        library = new Room("in the library");
+        armory = new Room("in the armory");
+        sittingRoom = new Room("in the sitting room");
+        ladysBed = new Room("in the lady's bedroom");
+        topStairs = new Room("in at the top of the stairs");
+        roof = new Room("on the roof above the kitchemn");
+        mensBed = new Room("in the gentlemen's bedroom");
+        ladysCloset = new Room("in the lady's bedroom closet");
+        mensCloset = new Room("in the gentlemen's bedroom closet");
+        maid = new Room("in the maid's quarters");
+        storageCloset = new Room("in the storage closet");
+        goal = new Room("have reached your goal");
+        kitchenGarden = new Room("in the kitchen garden");
+        shed = new Room("in the shed");
+        northGardens = new Room("in the northern gardens");
+        gazebo = new Room("in the gazebo");
+        fountain = new Room("at the fountain");
+        southGarden = new Room("in the southern gardens");
+        apothecarysShed = new Room("in the apothecary's shed");
+        apothecarysHerbGarden = new Room("in the apothecary's herb garden");
 
 		// initialise room exits
-		outside.addExit(ExitType.EAST, theater);
-		outside.addExit(ExitType.SOUTH, lab);
-		outside.addExit(ExitType.WEST, pub);
-		outside.addItem(new Item(ItemType.BATH, "A bucket of clean water", 50.0));
+        courtyard.addExit(ExitType.NORTH, kitchen);
+        courtyard.addExit(ExitType.SOUTH, stable);
+        courtyard.addExit(ExitType.EAST, grandStaircase);
 
-		theater.addExit(ExitType.WEST, outside);
-		theater.addExit(ExitType.EAST, lab);
-		theater.setChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, ExitType.EAST, ItemType.KEY));
+        kitchen.addExit(ExitType.NORTH, kitchenGarden);
+        kitchen.addExit(ExitType.SOUTH, courtyard);
+        kitchen.addExit(ExitType.EAST, diningHall);
+        kitchen.addExit(ExitType.WEST, servantsQuart);
 
-		pub.addExit(ExitType.EAST, outside);
-		pub.addItem(new Item(ItemType.FOOD, "A bowl of nuts", 5.0));
+        diningHall.addExit(ExitType.SOUTH, grandStaircase);
+		diningHall.addExit(ExitType.EAST, ballroomN);
+		diningHall.addExit(ExitType.WEST, kitchen);
 
-		lab.addExit(ExitType.NORTH, outside);
-		lab.addExit(ExitType.EAST, office);
-		lab.addItem(new Item(ItemType.FOOD, "A can of pringles", 3.0));
+        grandStaircase.addExit(ExitType.NORTH, diningHall);
+        grandStaircase.addExit(ExitType.SOUTH, hallwayW);
+        grandStaircase.addExit(ExitType.WEST, courtyard);
+        grandStaircase.addExit(ExitType.UP, topStairs);
 
-		office.addExit(ExitType.WEST, lab);
-		office.addItem(new Item(ItemType.KEY, "A bronze key with three teeth", 60.0));
+        closetStair.addExit(ExitType.SOUTH, hallwayE);
 
-		rooms.put(OUTSIDE, outside);
-		rooms.put(LAB, lab);
-		rooms.put(THEATER, theater);
-		rooms.put(PUB, pub);
-		rooms.put(OFFICE, office);
+        hallwayE.addExit(ExitType.NORTH, closetStair);
+		hallwayE.addExit(ExitType.SOUTH, library);
+		hallwayE.addExit(ExitType.EAST, ballroomS);
+        hallwayE.addExit(ExitType.WEST, hallwayW);
+
+        hallwayW.addExit(ExitType.NORTH, grandStaircase);
+        hallwayW.addExit(ExitType.EAST, hallwayE);
+
+        stable.addExit(ExitType.NORTH, courtyard);
+        stable.addExit(ExitType.SOUTH, armory);
+
+        ballroomN.addExit(ExitType.SOUTH, ballroomS);
+        ballroomN.addExit(ExitType.EAST, gazebo);
+        ballroomN.addExit(ExitType.WEST, diningHall);
+
+        ballroomS.addExit(ExitType.NORTH, ballroomN);
+        ballroomS.addExit(ExitType.EAST, fountain);
+        ballroomS.addExit(ExitType.WEST, hallwayE);
+
+        servantsQuart.addExit(ExitType.NORTH, washroom);
+		servantsQuart.addExit(ExitType.EAST, kitchen);
+
+        washroom.addExit(ExitType.SOUTH, servantsQuart);
+
+        library.addExit(ExitType.NORTH, hallwayE);
+        library.addExit(ExitType.EAST, goal);
+        library.addExit(ExitType.WEST, armory);
+
+        armory.addExit(ExitType.NORTH, stable);
+        armory.addExit(ExitType.SOUTH, apothecarysHerbGarden);
+        armory.addExit(ExitType.EAST, library);
+
+        sittingRoom.addExit(ExitType.SOUTH, topStairs);
+        sittingRoom.addExit(ExitType.EAST, ladysBed);
+        sittingRoom.addExit(ExitType.WEST, roof);
+
+		ladysBed.addExit(ExitType.SOUTH, ladysCloset);
+		ladysBed.addExit(ExitType.WEST, sittingRoom);
+
+		topStairs.addExit(ExitType.NORTH, sittingRoom);
+		topStairs.addExit(ExitType.SOUTH, mensBed);
+		topStairs.addExit(ExitType.EAST, maid);
+		topStairs.addExit(ExitType.DOWN, grandStaircase);
+
+		roof.addExit(ExitType.JUMP, courtyard);
+
+		mensBed.addExit(ExitType.NORTH, topStairs);
+		mensBed.addExit(ExitType.SOUTH, mensCloset);
+
+		ladysCloset.addExit(ExitType.NORTH, ladysBed);
+
+		mensCloset.addExit(ExitType.NORTH, mensBed);
+		mensCloset.addExit(ExitType.EAST, storageCloset);
+
+		maid.addExit(ExitType.SOUTH, storageCloset);
+		maid.addExit(ExitType.WEST, topStairs);
+
+		storageCloset.addExit(ExitType.NORTH, maid);
+		storageCloset.addExit(ExitType.WEST, mensCloset);
+
+		kitchenGarden.addExit(ExitType.SOUTH, kitchen);
+		kitchenGarden.addExit(ExitType.EAST, shed);
+
+		shed.addExit(ExitType.EAST, northGardens);
+		shed.addExit(ExitType.WEST, kitchenGarden);
+
+		northGardens.addExit(ExitType.SOUTH, gazebo);
+		northGardens.addExit(ExitType.WEST, shed);
+
+		gazebo.addExit(ExitType.NORTH, northGardens);
+		gazebo.addExit(ExitType.SOUTH, fountain);
+		gazebo.addExit(ExitType.WEST, ballroomN);
+
+		fountain.addExit(ExitType.NORTH, gazebo);
+		fountain.addExit(ExitType.SOUTH, southGarden);
+		fountain.addExit(ExitType.WEST, ballroomS);
+
+		southGarden.addExit(ExitType.NORTH, fountain);
+		southGarden.addExit(ExitType.SOUTH, apothecarysShed);
+
+		apothecarysShed.addExit(ExitType.NORTH, southGarden);
+		apothecarysShed.addExit(ExitType.WEST, apothecarysHerbGarden);
+
+		apothecarysHerbGarden.addExit(ExitType.EAST, apothecarysShed);
+		apothecarysHerbGarden.addExit(ExitType.NORTH, armory);
+
+		rooms.put(STABLE, stable);
+
+		//list of items in rooms
+		kitchen.addItem(new Item(ItemType.FOOD, "a leg of lamb sitting on the counter", 10.0));
+		diningHall.addItem(new Item(ItemType.FOOD, "a tray of appetizers", 5.0));
+		servantsQuart.addItem(new Item(ItemType.SERVANTSCLOTHES, "servant's clothing", 0));
+		washroom.addItem(new Item(ItemType.BATH, "water", 5.0));
+		library.addItem(new Item(ItemType.FOOD, "a bowl of nuts", 5.0));
+		library.addItem(new Item(ItemType.BOOK, "an old book", 10.0));
+		armory.addItem(new Item(ItemType.SWORD, "a sword", 10.0));
+		ladysBed.addItem(new Item(ItemType.PERFUME, "a bottle of perfume from the dresser", 5.0));
+		mensBed.addItem(new Item(ItemType.COLOGNE, "a bottle of cologne from the dresser", 5.0));
+		ladysCloset.addItem(new Item(ItemType.DRESS, "a dress", 0));
+		mensCloset.addItem(new Item(ItemType.SUIT, "a suit", 0));
+		kitchenGarden.addItem(new Item(ItemType.FOOD, "a basket of carrots", 5.0));
+		apothecarysHerbGarden.addItem(new Item(ItemType.HERBS, "some strange herbs", 1.0));
+		mensBed.addItem(new Item(ItemType.KEY, "a bronze key with three teeth", 60.0));
+
+		//challenges
+		kitchen.setChallenge(new Challenge("You're naked, put on some clothing", ChallengeType.CLOTHING, ExitType.EAST, ItemType.KEY));
+		topStairs.setChallenge(new Challenge("There's a guard sleeping next to the door to the bedroom", ChallengeType.GUARD, ExitType.SOUTH, ItemType.KEY));
 	}
 
 	/**
@@ -74,8 +230,8 @@ public class Game {
 	 */
 	public void play() {
 		// start outside
-		player.setCurrentRoom(rooms.get(OUTSIDE));
-		player.addMove(rooms.get(OUTSIDE));
+		player.setCurrentRoom(rooms.get(STABLE));
+		player.addMove(rooms.get(STABLE));
 		printWelcome();
 		// Enter the main command loop. Here we repeatedly read commands and
 		// execute them until the game is over.
@@ -92,8 +248,8 @@ public class Game {
 	 */
 	private void printWelcome() {
 		System.out.println();
-		System.out.println("Welcome to the World of Zuul!");
-		System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+		System.out.println("Welcome to the New World of Zuul!");
+		System.out.println("The New World of Zuul is a new, slightly less boring adventure game.");
 		System.out.println("Type 'help' if you need help.");
 		System.out.println();
 		System.out.println(player.getCurrentRoom().getLongDescription());

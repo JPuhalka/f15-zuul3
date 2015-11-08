@@ -15,7 +15,7 @@ import java.util.Map;
 public enum CommandWord {
 
 	GO("go"), USE("use"), MOVES("moves"), BACK("back"), LOOK("look"), EAT("eat"), TAKE("take"), DROP("drop"), QUIT("quit"), HELP("help"), INVENTORY("inventory"), UNKNOWN(
-			"unknown");
+			"unknown"), WEAR("wear");
 	String id;
 	private static final Map<String, CommandWord> lookup = new HashMap<>();
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -15,7 +15,8 @@ import java.util.Map;
  */
 public enum ItemType {
 
-	FOOD("food"), PERFUME("perfume"), COLOGNE("cologne"), KEY("key"), BATH("bath"), SUIT("suit"), DRESS("dress"), UNKNOWN("unknown");
+	FOOD("food"), PERFUME("perfume"), COLOGNE("cologne"), KEY("key"), BATH("bath"), SUIT("suit"), DRESS("dress"), UNKNOWN("unknown"),
+	BOOK("book"), SWORD("sword"), SERVANTSCLOTHES("servant's clothing"), HERBS("herbs");
 	String id;
 	private static final Map<String, ItemType> lookup = new HashMap<>();
 
