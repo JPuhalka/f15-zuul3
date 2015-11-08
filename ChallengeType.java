@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+
 
 /**
  *
@@ -11,5 +11,5 @@
  */
 public enum ChallengeType {
 
-	GATE, MAIDEN, GUARD, APOTHECARY, UNKOWN
+	GATE, CLOTHING, MAIDEN, GUARD, APOTHECARY, UNKOWN
 }

@@ -211,7 +211,7 @@ public class Game {
 		washroom.addItem(new Item(ItemType.BATH, "water", 5.0));
 		library.addItem(new Item(ItemType.FOOD, "a bowl of nuts", 5.0));
 		library.addItem(new Item(ItemType.BOOK, "an old book", 10.0));
-		armory.addItem(new Item(ItemType.SWORD, "a sword", 10.0));
+		armory.addItem(new Item(ItemType.SWORD, "a sword", 60.0));
 		ladysBed.addItem(new Item(ItemType.PERFUME, "a bottle of perfume from the dresser", 5.0));
 		mensBed.addItem(new Item(ItemType.COLOGNE, "a bottle of cologne from the dresser", 5.0));
 		ladysCloset.addItem(new Item(ItemType.DRESS, "a dress", 0));
